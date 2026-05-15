@@ -1,0 +1,24 @@
+# Maven build output
+backend/target/
+
+# Node modules
+frontend/node_modules/
+
+# MySQL data directory
+mysql/
+
+# Logs
+*.log
+
+# Environment files
+*.env
+.env
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

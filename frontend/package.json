@@ -1,0 +1,12 @@
+{
+  "name": "college-attendance-frontend",
+  "version": "1.0.0",
+  "description": "College Attendance Management System - Frontend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

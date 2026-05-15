@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register — AttendPro</title>
+  <link rel="stylesheet" href="../src/styles/main.css"/>
+</head>
+<body class="auth-body">
+<div class="auth-wrap">
+  <div class="auth-brand">
+    <div class="auth-logo-icon">🎓</div>
+    <div class="auth-logo-name">AttendPro</div>
+    <div class="auth-logo-sub">College Edition</div>
+    <p class="auth-tagline">Simplify attendance.<br>Empower educators.</p>
+  </div>
+
+  <div class="auth-card">
+    <h2 class="auth-title">Create account</h2>
+
+    <!-- Role tabs -->
+    <div class="role-tabs">
+      <button class="role-tab active" data-role="STAFF" type="button">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Staff
+      </button>
+      <button class="role-tab" data-role="STUDENT" type="button">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        Student
+      </button>
+    </div>
+
+    <div id="auth-error"   class="auth-alert"  style="display:none"></div>
+    <div id="auth-success" class="auth-success" style="display:none"></div>
+
+    <form id="signup-form" class="auth-form">
+      <input type="hidden" id="selected-role" value="STAFF"/>
+
+      <div class="field-group">
+        <label class="field-label">Full name</label>
+        <input class="field-input" type="text" id="username" placeholder="Your name" autocomplete="name" required/>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Email address</label>
+        <input class="field-input" type="email" id="email" placeholder="you@college.edu" autocomplete="email" required/>
+      </div>
+
+      <!-- Roll number — shown only for Student -->
+      <div class="field-group" id="roll-group" style="display:none">
+        <label class="field-label">
+          Roll number
+          <span style="color:var(--muted);font-weight:400"> — must match your enrolled roll no.</span>
+        </label>
+        <input class="field-input" type="text" id="rollNumber" placeholder="e.g. CS001" style="text-transform:uppercase"/>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Password <span style="color:var(--muted);font-weight:400">(min 6 chars)</span></label>
+        <input class="field-input" type="password" id="password" placeholder="••••••••" autocomplete="new-password" required/>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Confirm password</label>
+        <input class="field-input" type="password" id="confirm" placeholder="••••••••" autocomplete="new-password" required/>
+      </div>
+
+      <button class="auth-btn" type="submit" id="submit-btn">Create account</button>
+    </form>
+
+    <p class="auth-switch">Already have an account? <a href="/login">Sign in</a></p>
+  </div>
+</div>
+<script src="../src/services/auth.js"></script>
+<script src="../src/pages/signup.js"></script>
+</body>
+</html>
