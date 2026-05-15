@@ -9,7 +9,7 @@
 <body>
 <!-- Auth guard runs immediately before any content renders -->
 <script src="../src/services/auth.js"></script>
-<script>auth.guard();</script>
+<script>auth.guardStaff();</script>
 
 <div class="layout">
   <aside class="sidebar">
@@ -101,7 +101,6 @@
             <div class="donut" id="donut"></div>
             <div class="donut-legend">
               <span><span class="leg-dot" style="background:#10b981"></span>Present</span>
-              <span><span class="leg-dot" style="background:#f59e0b"></span>Late</span>
               <span><span class="leg-dot" style="background:#ef4444"></span>Absent</span>
             </div>
             <div class="donut-msg" id="donut-msg">No attendance marked today yet</div>
