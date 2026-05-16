@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mark Attendance — AttendPro</title>
   <link rel="stylesheet" href="../src/styles/main.css"/>
+  <script>document.documentElement.setAttribute('data-theme',localStorage.getItem('att_theme')||'light');</script>
 </head>
 <body>
 <script src="../src/services/auth.js"></script>
@@ -89,6 +90,7 @@
 <script src="../src/services/api.js"></script>
 <script src="../src/services/ui.js"></script>
 <script src="../src/pages/attendance.js"></script>
+<script src="../src/services/theme.js"></script>
 <script>auth.initSidebar();</script>
 </body>
 </html>

@@ -340,3 +340,80 @@ input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--primary)
 
 /* ── Attendance radio buttons ────────────────── */
 input[type="radio"] { width:16px; height:16px; accent-color: var(--primary); cursor:pointer; }
+
+/* ── Theme toggle button ─────────────────────── */
+.btn-theme {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: color 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.btn-theme:hover { color: var(--primary); border-color: var(--primary); }
+
+/* ── Dark mode variables ─────────────────────── */
+[data-theme="dark"] {
+  --bg:                 #0f172a;
+  --card:               #1e293b;
+  --text:               #f1f5f9;
+  --muted:              #94a3b8;
+  --border:             #334155;
+  --sidebar-bg:         #0b1120;
+  --sidebar-hover:      #1e293b;
+  --sidebar-active:     #1e293b;
+  --sidebar-text:       #94a3b8;
+  --sidebar-text-active:#f1f5f9;
+}
+
+/* ── Dark mode element overrides ─────────────── */
+[data-theme="dark"] tr:hover td               { background: #253045; }
+[data-theme="dark"] .donut::after             { background: var(--card); }
+
+/* Inputs */
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="date"],
+[data-theme="dark"] input[type="email"],
+[data-theme="dark"] input[type="password"],
+[data-theme="dark"] select,
+[data-theme="dark"] .field-input {
+  background: #0f172a;
+  color: var(--text);
+  border-color: var(--border);
+  color-scheme: dark;
+}
+
+/* Auth card */
+[data-theme="dark"] .auth-card    { background: #1e293b; }
+[data-theme="dark"] .auth-body    { background: #0b1120; }
+[data-theme="dark"] .auth-alert   { background: rgba(239,68,68,0.12);  border-color: rgba(239,68,68,0.3);  color: #f87171; }
+[data-theme="dark"] .auth-success { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.3); color: #34d399; }
+
+/* Stat icons */
+[data-theme="dark"] .stat-icon.blue   { background: rgba(99,102,241,0.15); }
+[data-theme="dark"] .stat-icon.purple { background: rgba(139,92,246,0.15); }
+[data-theme="dark"] .stat-icon.green  { background: rgba(16,185,129,0.15); }
+[data-theme="dark"] .stat-icon.red    { background: rgba(239,68,68,0.15);  }
+
+/* Percentage badges */
+[data-theme="dark"] .pct.good { background: rgba(16,185,129,0.15); color: #34d399; }
+[data-theme="dark"] .pct.warn { background: rgba(251,146,60,0.15);  color: #fb923c; }
+[data-theme="dark"] .pct.bad  { background: rgba(239,68,68,0.15);   color: #f87171; }
+
+/* Status badges */
+[data-theme="dark"] .status-badge.present { background: rgba(16,185,129,0.15); color: #34d399; }
+[data-theme="dark"] .status-badge.absent  { background: rgba(239,68,68,0.15);  color: #f87171; }
+
+/* Buttons */
+[data-theme="dark"] .btn-danger       { background: rgba(239,68,68,0.12); color: #f87171; }
+[data-theme="dark"] .btn-danger:hover { background: var(--red); color: white; }
+
+/* Server badge */
+[data-theme="dark"] .server-badge         { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.3); color: #34d399; }
+[data-theme="dark"] .server-badge.offline { background: rgba(239,68,68,0.12);  border-color: rgba(239,68,68,0.3);  color: #f87171; }
+
+/* Course credits chip */
+[data-theme="dark"] .course-credits { background: rgba(99,102,241,0.15); color: #a5b4fc; }

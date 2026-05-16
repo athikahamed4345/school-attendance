@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Courses — AttendPro</title>
   <link rel="stylesheet" href="../src/styles/main.css"/>
+  <script>document.documentElement.setAttribute('data-theme',localStorage.getItem('att_theme')||'light');</script>
 </head>
 <body>
 <script src="../src/services/auth.js"></script>
@@ -72,6 +73,7 @@
 </div>
 
 <script src="../src/services/api.js"></script>
+<script src="../src/services/theme.js"></script>
 <script>
 const DEPT_COLORS = [
   { bg: '#ede9fe', text: '#6d28d9' },

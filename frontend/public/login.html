@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login — AttendPro</title>
   <link rel="stylesheet" href="../src/styles/main.css"/>
+  <script>document.documentElement.setAttribute('data-theme',localStorage.getItem('att_theme')||'light');</script>
 </head>
 <body class="auth-body">
 <div class="auth-wrap">
@@ -50,5 +51,6 @@
 </div>
 <script src="../src/services/auth.js"></script>
 <script src="../src/pages/login.js"></script>
+<script src="../src/services/theme.js"></script>
 </body>
 </html>

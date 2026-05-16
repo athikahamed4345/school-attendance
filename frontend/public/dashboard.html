@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard — AttendPro</title>
   <link rel="stylesheet" href="../src/styles/main.css"/>
+  <script>document.documentElement.setAttribute('data-theme',localStorage.getItem('att_theme')||'light');</script>
 </head>
 <body>
 <!-- Auth guard runs immediately before any content renders -->
@@ -114,6 +115,7 @@
 
 <script src="../src/services/api.js"></script>
 <script src="../src/pages/dashboard.js"></script>
+<script src="../src/services/theme.js"></script>
 <script>auth.initSidebar();</script>
 </body>
 </html>
