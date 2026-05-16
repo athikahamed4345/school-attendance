@@ -31,12 +31,13 @@ public class DashboardController {
         long totalStudents = studentRepo.count();
         long totalCourses  = courseRepo.count();
         long todayPresent  = attendanceRepo.countDistinctPresentStudents(LocalDate.now());
+        long todayAbsent   = Math.max(0, totalStudents - todayPresent);
 
         Map<String, Object> stats = new LinkedHashMap<>();
         stats.put("totalStudents", totalStudents);
         stats.put("totalSubjects", totalCourses);
-        stats.put("todayPresent", todayPresent);
-        stats.put("averageAttendance", 0);
+        stats.put("todayPresent",  todayPresent);
+        stats.put("todayAbsent",   todayAbsent);
         return stats;
     }
 }

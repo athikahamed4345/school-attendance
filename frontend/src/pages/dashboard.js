@@ -4,23 +4,20 @@ function setDate() {
   document.getElementById('header-date').textContent = d.toLocaleDateString('en-GB', opts);
 }
 
-function setDonut(present, total) {
+function setDonut(present, absent) {
   const donut = document.getElementById('donut');
   const msg   = document.getElementById('donut-msg');
+  const total  = present + absent;
+
   if (total === 0) {
     donut.style.background = 'conic-gradient(#94a3b8 100%)';
-    msg.textContent = 'No students enrolled';
-    return;
-  }
-  if (present === 0) {
-    donut.style.background = 'conic-gradient(#ef4444 100%)';
     msg.textContent = 'No attendance marked today yet';
     return;
   }
+
   const pct = Math.round((present / total) * 100);
-  donut.style.background =
-    `conic-gradient(#10b981 ${pct}%, #ef4444 ${pct}% 100%)`;
-  msg.textContent = `${pct}% attendance today`;
+  donut.style.background = `conic-gradient(#10b981 ${pct}%, #ef4444 ${pct}% 100%)`;
+  msg.textContent = `${pct}% attendance today (${present} present, ${absent} absent)`;
 }
 
 async function loadDashboard() {
@@ -28,11 +25,10 @@ async function loadDashboard() {
   const label = document.getElementById('server-label');
 
   try {
-    const stats = await api.get('/dashboard/stats');
-
+    const stats   = await api.get('/dashboard/stats?t=' + Date.now());
     const total   = stats.totalStudents ?? 0;
     const present = stats.todayPresent  ?? 0;
-    const absent  = Math.max(0, total - present);
+    const absent  = stats.todayAbsent   ?? 0;
     const courses = stats.totalSubjects ?? 0;
 
     document.getElementById('stat-students').textContent = total;
@@ -40,7 +36,7 @@ async function loadDashboard() {
     document.getElementById('stat-present').textContent  = present;
     document.getElementById('stat-absent').textContent   = absent;
 
-    setDonut(present, total);
+    setDonut(present, absent);
 
     badge.classList.remove('offline');
     const now = new Date();
@@ -55,5 +51,9 @@ async function loadDashboard() {
 
 setDate();
 loadDashboard();
-// Auto-refresh every 10 seconds so stats update after marking attendance
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') loadDashboard();
+});
+
 setInterval(loadDashboard, 10000);

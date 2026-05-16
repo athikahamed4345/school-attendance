@@ -72,7 +72,7 @@
         <div id="att-notice" style="display:none;margin:0 0 0;padding:12px 20px;font-size:0.875rem;border-radius:0"></div>
         <form id="attendance-form">
           <table>
-            <thead><tr><th>Roll No</th><th>Name</th><th>Present</th></tr></thead>
+            <thead><tr><th>Roll No</th><th>Name</th><th>Present</th><th>Absent</th></tr></thead>
             <tbody id="attendance-body">
               <tr><td class="empty-td" colspan="3">Select a date and subject, then click Load Students</td></tr>
             </tbody>
@@ -87,6 +87,7 @@
 </div>
 
 <script src="../src/services/api.js"></script>
+<script src="../src/services/ui.js"></script>
 <script src="../src/pages/attendance.js"></script>
 <script>auth.initSidebar();</script>
 </body>

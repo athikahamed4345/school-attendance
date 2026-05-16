@@ -1,63 +1,49 @@
-async function loadSubjectOptions() {
-  try {
-    const courses = await api.get('/courses');
-    const select  = document.getElementById('attendance-subject');
-    courses.forEach(c => {
-      const opt = document.createElement('option');
-      opt.value = c.name;
-      opt.textContent = `${c.code} — ${c.name}`;
-      select.appendChild(opt);
-    });
-  } catch {
-    // fallback: keep as-is
-  }
-}
-
-function showNotice(msg, type) {
-  const el = document.getElementById('att-notice');
-  el.textContent = msg;
-  el.style.display = 'block';
-  el.style.background = type === 'error' ? '#fef2f2' : '#f0fdf4';
-  el.style.color      = type === 'error' ? '#dc2626'  : '#16a34a';
-  el.style.borderTop  = type === 'error' ? '1px solid #fecaca' : '1px solid #bbf7d0';
-  el.style.borderBottom = el.style.borderTop;
-}
-
-// Default to today's date
-document.getElementById('attendance-date').value = new Date().toISOString().split('T')[0];
+const _d = new Date();
+document.getElementById('attendance-date').value =
+  `${_d.getFullYear()}-${String(_d.getMonth()+1).padStart(2,'0')}-${String(_d.getDate()).padStart(2,'0')}`;
 
 document.getElementById('btn-load').addEventListener('click', async () => {
   const subject = document.getElementById('attendance-subject').value;
-  if (!subject) { showNotice('Please select a subject first.', 'error'); return; }
+  if (!subject) { showNotice('att-notice', 'Please select a subject first.', 'error'); return; }
 
   document.getElementById('att-notice').style.display = 'none';
 
-  const students = await api.get('/students');
-  const tbody    = document.getElementById('attendance-body');
-  if (students.length === 0) {
-    tbody.innerHTML = '<tr><td class="empty-td" colspan="3">No students found.</td></tr>';
-    return;
+  try {
+    const students = await api.get('/students');
+    const tbody    = document.getElementById('attendance-body');
+    if (students.length === 0) {
+      tbody.innerHTML = '<tr><td class="empty-td" colspan="4">No students found.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = students.map(s => `
+      <tr>
+        <td><strong>${s.rollNumber}</strong></td>
+        <td>${s.name}</td>
+        <td style="text-align:center">
+          <input type="radio" name="att_${s.id}" value="present" checked/>
+        </td>
+        <td style="text-align:center">
+          <input type="radio" name="att_${s.id}" value="absent"/>
+        </td>
+      </tr>`).join('');
+  } catch {
+    showNotice('att-notice', 'Failed to load students.', 'error');
   }
-  tbody.innerHTML = students.map(s => `
-    <tr>
-      <td><strong>${s.rollNumber}</strong></td>
-      <td>${s.name}</td>
-      <td><input type="checkbox" name="present" value="${s.id}" checked/></td>
-    </tr>`).join('');
 });
 
 document.getElementById('attendance-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const date    = document.getElementById('attendance-date').value;
   const subject = document.getElementById('attendance-subject').value;
-  if (!date || !subject) { showNotice('Please select a date and subject.', 'error'); return; }
+  if (!date || !subject) { showNotice('att-notice', 'Please select a date and subject.', 'error'); return; }
 
-  const checkboxes = document.querySelectorAll('input[name="present"]');
-  if (checkboxes.length === 0) { showNotice('Load students first.', 'error'); return; }
+  const radios = document.querySelectorAll('input[type="radio"]:checked');
+  if (radios.length === 0) { showNotice('att-notice', 'Load students first.', 'error'); return; }
 
-  const records = Array.from(checkboxes).map(cb => ({
-    studentId: parseInt(cb.value),
-    date, subject, present: cb.checked
+  const records = Array.from(radios).map(r => ({
+    studentId: parseInt(r.name.replace('att_', '')),
+    date, subject,
+    present: r.value === 'present'
   }));
 
   const btn = document.getElementById('btn-submit');
@@ -65,17 +51,14 @@ document.getElementById('attendance-form').addEventListener('submit', async (e) 
   btn.textContent = 'Submitting…';
 
   try {
-    const res = await api.post('/attendance/bulk', records);
-    const saved = res.saved ?? records.length;
-    showNotice(`Attendance saved for ${saved} student(s) — ${subject} on ${date}.`, 'success');
-    document.getElementById('attendance-body').innerHTML =
-      '<tr><td class="empty-td" colspan="3">Attendance submitted. Load again to mark another batch.</td></tr>';
+    await api.post('/attendance/bulk', records);
+    showNotice('att-notice', 'Attendance submitted! Going to dashboard…', 'success');
+    setTimeout(() => window.location.href = '/dashboard', 1000);
   } catch (err) {
-    showNotice(err.message || 'Failed to submit attendance. Is the backend running?', 'error');
-  } finally {
+    showNotice('att-notice', err.message || 'Failed to submit. Is the backend running?', 'error');
     btn.disabled = false;
     btn.textContent = 'Submit Attendance';
   }
 });
 
-loadSubjectOptions();
+loadCourseOptions('attendance-subject');

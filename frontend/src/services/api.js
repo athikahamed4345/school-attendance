@@ -40,17 +40,6 @@ const api = {
     return res.json();
   },
 
-  async put(endpoint, data) {
-    const res = await fetch(`${API_BASE}${endpoint}`, {
-      method:  'PUT',
-      headers: this._headers(true),
-      body:    JSON.stringify(data)
-    });
-    if (res.status === 401) this._handle401();
-    if (!res.ok) throw new Error(`PUT ${endpoint} → ${res.status}`);
-    return res.json();
-  },
-
   async delete(endpoint) {
     const res = await fetch(`${API_BASE}${endpoint}`, {
       method:  'DELETE',

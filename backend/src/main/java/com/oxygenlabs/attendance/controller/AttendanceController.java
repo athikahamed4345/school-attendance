@@ -35,9 +35,10 @@ public class AttendanceController {
             String subject  = record.get("subject").toString();
             boolean present = Boolean.parseBoolean(record.get("present").toString());
 
-            if (attendanceRepo.existsByStudentAndDateAndSubject(student, date, subject)) continue;
-
-            Attendance a = new Attendance();
+            // Update existing record if already marked, otherwise create new
+            Attendance a = attendanceRepo
+                    .findByStudentAndDateAndSubject(student, date, subject)
+                    .orElse(new Attendance());
             a.setStudent(student);
             a.setDate(date);
             a.setSubject(subject);

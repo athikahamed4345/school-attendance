@@ -1,6 +1,20 @@
-if (auth.getToken()) {
-  window.location.replace(auth.isStudent() ? '/student' : '/dashboard');
-}
+// Validate existing token with backend before auto-redirecting
+(async () => {
+  const token = auth.getToken();
+  if (!token) return;
+  try {
+    const res = await fetch('http://localhost:8080/api/auth/verify', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (res.ok) {
+      window.location.replace(auth.isStudent() ? '/student' : '/dashboard');
+    } else {
+      auth.clear();
+    }
+  } catch {
+    auth.clear();
+  }
+})();
 
 // Tab switching
 document.querySelectorAll('.role-tab').forEach(tab => {

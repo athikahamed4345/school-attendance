@@ -50,7 +50,7 @@ const auth = {
 
   async logout() {
     try {
-      await fetch('http://localhost:8080/api/auth/logout', {
+      await fetch(`${API_BASE}/auth/logout`, {
         method: 'POST', headers: { 'Authorization': `Bearer ${this.getToken()}` }
       });
     } catch {}
